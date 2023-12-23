@@ -5,9 +5,9 @@ from PyQt5.QtWidgets import *;
 class ButtonHandler:
     def __init__(self):
         self._df = []
-        self._layout = QVBoxLayout()
+        self.layout = QVBoxLayout()
         self._button = QPushButton("Load File")
-        self._layout.addWidget(self._button) 
+        self.layout.addWidget(self._button) 
         self._button.clicked.connect(lambda: self.on_clicked())
         self._isActive = False;
         self._table = QTableWidget()
@@ -20,7 +20,7 @@ class ButtonHandler:
     
     def show_table(self):
         if self._isActive is True:
-            self._layout.removeWidget(self._table)
+            self.layout.removeWidget(self._table)
             self._table.deleteLater()
             self._table = QTableWidget()
             self._isActive = False
@@ -31,7 +31,7 @@ class ButtonHandler:
                 self._table.setColumnCount(12)
                 self._table.setHorizontalHeaderLabels(self._df.columns)
                 self._table.setItem(i, k, QTableWidgetItem(self._df.iloc[[i],[k]].to_string(index=False, header=False)))
-        self._layout.addWidget(self._table)
+        self.layout.addWidget(self._table)
         self._table.show()
         self._isActive = True;
     
@@ -40,6 +40,6 @@ if __name__ == '__main__':
     window = QWidget();
     window.setGeometry(100, 100, 800, 600)
     window.setWindowTitle("Load File and Parse to Pandas")
-    window.setLayout(ButtonHandler()._layout)
+    window.setLayout(ButtonHandler().layout)
     window.show()
     sys.exit(app.exec_())
